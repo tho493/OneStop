@@ -1,5 +1,5 @@
 const express = require('express');
-const { getApplications, createApplication, getApplicationById, getNumberAll } = require('../controllers/applicationController');
+const { getApplications, createApplication, getApplicationById } = require('../controllers/applicationController');
 const authenticateToken  = require('../middleware/auth')
 
 const router = express.Router();
