@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 
+const adminRouter = require('./src/adm/router')
+const userRouter = require('./src/user/router')
+// const { getApplications, createApplication, getApplicationById, getNumberAll } = require('../controllers/applicationController');
+
 router.use(express.static(path.join(__dirname, 'src')));
 
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './src/pages/index.html'));
-});
+router.get('/', userRouter)
+router.get('/admin', adminRouter)
 
-router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, './src/pages/login.html'));
-});
 
 module.exports = router;

@@ -14,6 +14,10 @@ async function checkToken() {
 
             if (response.ok) {
                 const data = await response.json();
+                if(data.type != 'admin'){
+                    localStorage.removeItem('authToken');
+                    window.location.href = '/login';    
+                }
                 console.log('Dữ liệu:', data);
             } else if (response.status === 401) {
                 alert("Bạn chưa đăng nhập, hãy đăng nhập lại");
