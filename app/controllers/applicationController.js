@@ -35,30 +35,30 @@ const createApplication = async (req, res) => {
     }
 };
 
-const getTotalApplications = async () => {
+const getTotalApplications = async (req, res) => {
     try {
         const result = await sql.query(`SELECT COUNT(*) as count FROM Applications`);
-        return JSON.stringify(result.recordset[0].count);
+        res.json(result.recordset[0].count);
     } catch (error) {
         console.error("Error fetching total applications:", error);
-        return "error";
+        return res.status(404).send({error});
     }
 };
 
-const getPendingApplicationsCount = async () => {
+const getPendingApplicationsCount = async (req, res) => {
     try {
         const result = await sql.query(`SELECT COUNT(*) as count FROM Applications WHERE status = 'pending'`);
-        return JSON.stringify(result.recordset[0].count);
+        res.json(result.recordset[0].count);
     } catch (error) {
-        console.error("Error fetching pending applications count:", error);
-        return "error";
+        console.error("Error fetching total applications:", error);
+        return res.status(404).send({error});
     }
 };
 
-const getApprovedApplicationsCount = async () => {
+const getApprovedApplicationsCount = async (req, res) => {
     try {
         const result = await sql.query(`SELECT COUNT(*) as count FROM Applications WHERE status = 'approved'`);
-        return JSON.stringify(result.recordset[0].count);
+        res.json(result.recordset[0].count);
     } catch (error) {
         console.error("Error fetching approved applications count:", error);
         return "error";
