@@ -14,7 +14,7 @@ const getApplications = async (req, res) => {
 const getApplicationById = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await sql.query(`SELECT * FROM Applications WHERE application_id = ${id}`);
+        const result = await sql.query(`SELECT * FROM Applications WHERE application_id = '${id}'`);
         if (result.recordset.length === 0) {
             return res.status(404).send('Hồ sơ không tìm thấy');
         }
@@ -26,14 +26,16 @@ const getApplicationById = async (req, res) => {
 
 // Thêm đơn ứng tuyển mới
 const createApplication = async (req, res) => {
-    const { student_id, status } = req.body;
+    const { student_id } = req.body;
     try {
-        await sql.query(`INSERT INTO Applications (student_id, status) VALUES (${student_id}, ${status})`);
+        await sql.query(`INSERT INTO Applications (student_id, status) VALUES ('${student_id}', 'pendding')`);
         res.status(201).send('Hồ sơ được tạo thành công');
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
+
+
 
 const getTotalApplications = async (req, res) => {
     try {
@@ -61,8 +63,18 @@ const getApprovedApplicationsCount = async (req, res) => {
         res.json(result.recordset[0].count);
     } catch (error) {
         console.error("Error fetching approved applications count:", error);
-        return "error";
+        return res.status(404).send({error});
     }
 };
 
-module.exports = { getApplications, createApplication, getApplicationById, getTotalApplications, getPendingApplicationsCount, getApprovedApplicationsCount };
+const getRejectedApplicationsCount = async (req, res) => {
+    try {
+        const result = await sql.query(`SELECT COUNT(*) as count FROM Applications WHERE status = 'approved'`);
+        res.json(result.recordset[0].count);
+    } catch (error) {
+        console.error("Error fetching approved applications count:", error);
+        return res.status(404).send({error});
+    }
+};
+
+module.exports = { getApplications, createApplication, getApplicationById, getTotalApplications, getPendingApplicationsCount, getApprovedApplicationsCount, getRejectedApplicationsCount };

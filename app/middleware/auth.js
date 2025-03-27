@@ -11,18 +11,19 @@ const authenticateToken = (req, res, next) => {
             return res.status(403).send({ message: "Token không hợp lệ" });
         }
 
-        // Gán thông tin người dùng vào req.user
         req.user = user;
 
         // Kiểm tra loại người dùng
         if (user.type === 'admin') {
-            return res.status(200).send({ message: "Xác thực thành công với quyền người dùng", type: "admin" });
+            req.user.role = "admin";
         } else if (user.type === 'user') {
-            return res.status(200).send({ message: "Xác thực thành công với quyền người dùng", type: "user" });
+            req.user.role = "user";
         } else {
-            // Nếu loại người dùng không hợp lệ
             return res.status(403).send({ message: "Loại người dùng không hợp lệ" });
         }
+
+        next();
+
     });
 };
 

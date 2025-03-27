@@ -40,4 +40,40 @@ const createStudent = async (req, res) => {
     }
 };
 
-module.exports = { getStudents, createStudent, getStudentById };
+// Update sinh viên
+const updateStudent = async (req, res) => {
+    const { id } = req.params;
+    const { full_name, date_of_birth, address, phone_number, email, password } = req.body;
+    try {
+        const result = await sql.query(`
+            UPDATE Students 
+            SET full_name = '${full_name}', date_of_birth = '${date_of_birth}', address = '${address}', 
+                phone_number = '${phone_number}', email = '${email}', password = '${password}' 
+            WHERE student_id = '${id}'`);
+        
+        if (result.rowsAffected[0] === 0) {
+            return res.status(404).send('Sinh viên không tìm thấy');
+        }
+        res.json({ message: 'Thông tin sinh viên đã được cập nhật thành công' });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+const deleteStudent = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await sql.query(`DELETE FROM Students WHERE student_id = '${id}'`);
+        
+        if (result.rowsAffected[0] === 0) {
+            return res.status(404).send('Sinh viên không tìm thấy');
+        }
+        res.json({ message: 'Sinh viên đã được xóa thành công' });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+
+
+module.exports = { getStudents, createStudent, getStudentById, updateStudent, deleteStudent };
