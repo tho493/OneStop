@@ -1,7 +1,7 @@
 const { sql } = require('../config/db');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 
 // Configure multer
 const storage = multer.diskStorage({
@@ -21,22 +21,27 @@ const uploadDocument = async (req, res) => {
             return res.status(500).send(err.message);
         }
 
-        const { application_id, document_type } = req.body;
-        const files = req.files;
+        const document_type = req.body.document_type;
+        const document_name = req.body.document_name;
 
-        if (!files || files.length === 0) {
+        const file = req.file;
+
+        if (!document_name) {
+            return res.status(400).send('Không có tên tài liệu')
+        }
+
+        if (!file) {
             return res.status(400).send('Không có file nào được tải lên');
         }
 
         try {
-            const promises = files.map(file => {
-                return sql.query`
-                    INSERT INTO Documents (application_id, document_type, file_path)
-                    VALUES (${application_id}, ${document_type}, ${file.path})`;
-            });
+            const result = await sql.query`
+                INSERT INTO Documents (document_type, file_name, file_path)
+                OUTPUT INSERTED.document_id
+                VALUES (${document_type}, ${document_name}, ${file.path})`;
 
-            await Promise.all(promises);
-            res.status(201).send('Tài liệu được tải lên thành công');
+            const documentId = result.recordset[0].document_id;
+            res.status(201).json({ message: 'Tài liệu được tải lên thành công', document_id: documentId });
         } catch (error) {
             res.status(500).send(error.message);
         }
@@ -92,29 +97,6 @@ const getDocumentById = async (req, res) => {
     }
 };
 
-const updateDocument = async (req, res) => {
-    const { id } = req.params;
-    const { document_type } = req.body;
-    const file_path = req.file ? req.file.path : null;
-
-    try {
-        const updateQuery = `
-            UPDATE Documents 
-            SET document_type = ${document_type}, 
-                file_path = ${file_path ? file_path : 'file_path'} 
-            WHERE document_id = ${id}`;
-
-        const result = await sql.query(updateQuery);
-
-        if (result.rowsAffected[0] === 0) {
-            return res.status(404).send('Tài liệu không tìm thấy');
-        }
-        res.json({ message: 'Tài liệu đã được cập nhật thành công' });
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-};
-
 const deleteDocument = async (req, res) => {
     const { id } = req.params;
     try {
@@ -129,4 +111,4 @@ const deleteDocument = async (req, res) => {
     }
 };
 
-module.exports = { uploadDocument, downloadDocument, getDocumentById, getAllDocuments, updateDocument, deleteDocument };
+module.exports = { uploadDocument, downloadDocument, getDocumentById, getAllDocuments, deleteDocument };

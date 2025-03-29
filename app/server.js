@@ -3,20 +3,16 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { connectDB } = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
-const applicationRoutes = require('./routes/applicationRoutes');
 const documentRoutes = require('./routes/documentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const yeu_cau = require('./routes/yeu_cauRoutes');
+const loai_yeu_cau = require('./routes/loai_yeu_cauRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 connectDB();
-
-// Middleware static
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'public'))
 
 // Middleware log
 app.use((req, res, next) => {
@@ -25,8 +21,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/students', studentRoutes);
-app.use('/api/applications', applicationRoutes);
 app.use('/api/documents', documentRoutes);
+app.use('/api/loai-yeu-cau', loai_yeu_cau);
+app.use('/api/yeu-cau', yeu_cau);
 app.use('/api', authRoutes)
 
 app.use((req, res, next) => {

@@ -15,9 +15,11 @@ const authenticateToken = (req, res, next) => {
 
         // Kiểm tra loại người dùng
         if (user.type === 'admin') {
-            req.user.role = "admin";
+            if(req.url == "/authToken") return res.status(200).send({ type: "admin" });
+            else req.user.role = "admin";
         } else if (user.type === 'user') {
-            req.user.role = "user";
+            if(req.url == "/authToken") return res.status(200).send({ type: "user" });
+            else req.user.role = "user";
         } else {
             return res.status(403).send({ message: "Loại người dùng không hợp lệ" });
         }

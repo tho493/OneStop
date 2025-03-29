@@ -1,14 +1,15 @@
 const express = require('express');
-const { getStudents, createStudent, getStudentById, updateStudent, deleteStudent } = require('../controllers/studentController');
+const { getAllStudents, createStudent, getStudentById, updateStudent, deleteStudent } = require('../controllers/studentController');
 const authenticateToken  = require('../middleware/auth')
-
 
 const router = express.Router();
 
-router.get('/', authenticateToken, getStudents);
-router.post('/', authenticateToken, createStudent);
-router.get('/get/:id', authenticateToken, getStudentById);
-router.post('/update/:id', authenticateToken, updateStudent);
-router.get('/delete/:id', authenticateToken, deleteStudent);
+// ======================= Routes for students =======================
+
+router.get('/', authenticateToken, getAllStudents); // Lấy toàn bộ danh sách
+router.get('/:id', authenticateToken, getStudentById); // Lấy thông tin theo ID
+router.post('/', authenticateToken, createStudent); // Tạo mới
+router.put('/:id', authenticateToken, updateStudent); // Cập nhật
+router.delete('/:id', authenticateToken, deleteStudent); // Xóa
 
 module.exports = router;
