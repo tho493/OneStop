@@ -16,6 +16,7 @@
 
 - Node.js và npm (Node Package Manager)
 - Git
+- Sql server
 
 ## Cài đặt server
 
@@ -36,6 +37,10 @@
    ```sh
    npm install
    ```
+
+4. Tạo database
+
+- Khởi tạo database sql server bằng file database.sql
 
 4. Tạo file .env và thêm các thông tin API
 

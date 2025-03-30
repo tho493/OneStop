@@ -100,6 +100,167 @@
 - Token được lấy từ header `Authorization` phải có định dạng `Bearer <token>`.
 - Middleware sẽ gán thông tin người dùng vào `req.user` để các hàm xử lý tiếp theo có thể sử dụng.
 
+# Admin
+
+### 1. Lấy Danh Sách Tài Khoản Admin
+
+- **Endpoint**: `GET /admin`
+- **Mô tả**: Lấy danh sách tất cả tài khoản admin trong cơ sở dữ liệu.
+- **Tham số**: Không có.
+- **Phản hồi thành công**:
+  - **Mã trạng thái**: 200 OK
+  - **Nội dung**:
+    ```json
+    [
+        {
+            "manager_id": 1,
+            "full_name": "Nguyen Van A",
+            "username": "adminA"
+        },
+        ...
+    ]
+    ```
+- **Lỗi**:
+  - **Mã trạng thái**: 500 Internal Server Error
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Lỗi máy chủ"
+      }
+      ```
+
+### 2. Lấy Tài Khoản Admin Theo ID
+
+- **Endpoint**: `GET /admin/:id`
+- **Mô tả**: Lấy thông tin chi tiết của tài khoản admin dựa trên `manager_id`.
+- **Tham số**:
+  - `id`: ID của tài khoản admin.
+- **Phản hồi thành công**:
+  - **Mã trạng thái**: 200 OK
+  - **Nội dung**:
+    ```json
+    {
+      "manager_id": 1,
+      "full_name": "Nguyen Van A",
+      "username": "adminA"
+    }
+    ```
+- **Lỗi**:
+  - **Mã trạng thái**: 404 Not Found
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Tài khoản không tìm thấy"
+      }
+      ```
+  - **Mã trạng thái**: 500 Internal Server Error
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Lỗi máy chủ"
+      }
+      ```
+
+### 3. Tạo Tài Khoản Admin Mới
+
+- **Endpoint**: `POST /admin`
+- **Mô tả**: Tạo một tài khoản admin mới trong cơ sở dữ liệu.
+- **Tham số**:
+  - **Body**:
+    ```json
+    {
+      "full_name": "Nguyen Van A",
+      "username": "adminA",
+      "password": "securepassword"
+    }
+    ```
+- **Phản hồi thành công**:
+  - **Mã trạng thái**: 201 Created
+  - **Nội dung**:
+    ```json
+    {
+      "message": "Tài khoản admin được tạo thành công",
+      "manager_id": 1
+    }
+    ```
+- **Lỗi**:
+  - **Mã trạng thái**: 500 Internal Server Error
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Lỗi máy chủ"
+      }
+      ```
+
+### 4. Cập Nhật Thông Tin Admin
+
+- **Endpoint**: `PUT /admin/:id`
+- **Mô tả**: Cập nhật thông tin của tài khoản admin dựa trên `manager_id`.
+- **Tham số**:
+  - `id`: ID của tài khoản admin.
+- **Tham số**:
+  - **Body**:
+    ```json
+    {
+      "full_name": "Nguyen Van B",
+      "username": "adminB",
+      "password": "newpassword"
+    }
+    ```
+- **Phản hồi thành công**:
+  - **Mã trạng thái**: 200 OK
+  - **Nội dung**:
+    ```json
+    {
+      "message": "Thông tin admin đã được cập nhật thành công"
+    }
+    ```
+- **Lỗi**:
+  - **Mã trạng thái**: 404 Not Found
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Admin không tìm thấy"
+      }
+      ```
+  - **Mã trạng thái**: 500 Internal Server Error
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Lỗi máy chủ"
+      }
+      ```
+
+### 5. Xóa Tài Khoản Admin
+
+- **Endpoint**: `DELETE /admin/:id`
+- **Mô tả**: Xóa tài khoản admin dựa trên `manager_id`.
+- **Tham số**:
+  - `id`: ID của tài khoản admin.
+- **Phản hồi thành công**:
+  - **Mã trạng thái**: 200 OK
+  - **Nội dung**:
+    ```json
+    {
+      "message": "Admin đã được xóa thành công"
+    }
+    ```
+- **Lỗi**:
+  - **Mã trạng thái**: 404 Not Found
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Admin không tìm thấy"
+      }
+      ```
+  - **Mã trạng thái**: 500 Internal Server Error
+    - **Nội dung**:
+      ```json
+      {
+        "message": "Lỗi máy chủ"
+      }
+      ```
+
 # Document
 
 ### 1. Tải Tài Liệu Lên

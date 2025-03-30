@@ -7,6 +7,7 @@ const documentRoutes = require('./routes/documentRoutes');
 const authRoutes = require('./routes/authRoutes');
 const yeu_cau = require('./routes/yeu_cauRoutes');
 const loai_yeu_cau = require('./routes/loai_yeu_cauRoutes');
+const admin = require('./routes/adminRoutes')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/loai-yeu-cau', loai_yeu_cau);
 app.use('/api/yeu-cau', yeu_cau);
+app.use('/admin', admin)
 app.use('/api', authRoutes)
 
 app.use((req, res, next) => {
