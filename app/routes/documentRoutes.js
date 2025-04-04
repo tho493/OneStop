@@ -7,7 +7,7 @@ const router = express.Router();
 // ======================= Routes for document =======================
 router.get('/',authenticateToken, getAllDocuments);
 router.get('/:id',authenticateToken, getDocumentById);
-router.get('/download/:id',authenticateToken, downloadDocument);
+router.get('/download/:id', downloadDocument);
 router.post('/upload/',authenticateToken, uploadDocument);
 router.delete('/:id',authenticateToken, deleteDocument);
 

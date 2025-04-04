@@ -26,12 +26,12 @@ const getYeuCauById = async (req, res) => {
 
 // Tạo yêu cầu mới
 const createYeuCau = async (req, res) => {
-    const { loai_yeu_cau_id, student_id, message } = req.body;
+    const { loai_yeu_cau_id, student_id, status, message } = req.body;
     try {
         const result = await sql.query`
-            INSERT INTO Yeu_cau (loai_yeu_cau_id, student_id, message)
+            INSERT INTO Yeu_cau (loai_yeu_cau_id, student_id, status, message)
             OUTPUT INSERTED.yeu_cau_id
-            VALUES (${loai_yeu_cau_id}, ${student_id}, ${message})`;
+            VALUES (${loai_yeu_cau_id}, ${student_id}, ${status}, ${message})`;
 
             const yeu_cau_id = result.recordset[0].yeu_cau_id;
         res.status(201).json({ message: 'Yêu cầu được tạo thành công', yeu_cau_id });
@@ -43,13 +43,14 @@ const createYeuCau = async (req, res) => {
 // Cập nhật yêu cầu
 const updateYeuCau = async (req, res) => {
     const { id } = req.params;
-    const { loai_yeu_cau_id, student_id, message } = req.body;
+    const { loai_yeu_cau_id, student_id, status, message } = req.body;
     try {
         const result = await sql.query`
             UPDATE Yeu_cau 
             SET loai_yeu_cau_id = ${loai_yeu_cau_id}, 
                 student_id = ${student_id}, 
-                status = ${message}, 
+                status = ${status},
+                message = ${message}, 
                 updated_at = GETDATE() 
             WHERE yeu_cau_id = ${id}`;
 
