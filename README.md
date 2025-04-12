@@ -1,7 +1,7 @@
 <h1 align=center>Hệ thống một cửa SDU</h1>
 
 <p align="center">
-    Project hỗ trợ sinh viên nhập học một cách tiện lợi và nhanh chóng.
+    Project hỗ trợ sinh viên nộp các văn bản, tài liệu nhanh chóng tới nhà trường.
     <br />
     <br />
     <a href="https://github.com/tho493/student-enrollment.git/issues">Report Bug</a>
