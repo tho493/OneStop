@@ -1,12 +1,11 @@
-<h1 align=center>Hệ thống một cửa SDU</h1>
+<h1 align=center>Hệ thống cổng thông tin một cửa Trường đại học Sao Đỏ</h1>
 
 <p align="center">
     Project hỗ trợ sinh viên nộp các văn bản, tài liệu nhanh chóng tới nhà trường.
     <br />
-    <br />
-    <a href="https://github.com/tho493/student-enrollment.git/issues">Report Bug</a>
+    <a href="https://github.com/tho493/OneStop.git/issues">Report Bug</a>
     ·
-    <a href="https://github.com/tho493/student-enrollment.git/pulls">Request Feature</a>
+    <a href="https://github.com/tho493/OneStop.git/pulls">Request Feature</a>
     </p>
 </p>
 
@@ -27,7 +26,7 @@
 0. Clone repository về máy
 
    ```sh
-   git clone https://github.com/tho493/student-enrollment.git
+   git clone https://github.com/tho493/OneStop.git
    ```
 
 ## Cài đặt server
@@ -35,7 +34,7 @@
 1. Di chuyển vào thư mục be của project
 
    ```sh
-   cd student-enrollment/be
+   cd OneStop/be
    ```
 
 2. Cài đặt các package cần thiết
@@ -72,7 +71,7 @@
 1. Di chuyển vào thư mục be của project
 
    ```sh
-   cd student-enrollment/fe
+   cd OneStop/fe
    ```
 
 2. Cài đặt các package cần thiết
@@ -130,8 +129,10 @@ Nguyễn Chí Thọ - [@tho493](https://facebook.com/tho493) - chitho040903@gmai
 <br>
 Tăng Quang Nghĩa - [@nghiahd147](https://github.com/nghiahd147) - Co-Leader
 
-Project Link: [https://github.com/tho493/student-enrollment.git](https://github.com/tho493/student-enrollment.git)
+Project Link: [https://github.com/tho493/OneStop.git](https://github.com/tho493/OneStop.git)
 
 # Notes
 
-Chương trình là bài tập của môn đồ án. Mục đích nghiên cứu
+Chương trình là bài tập của môn đồ án công nghệ phần mềm. Mang mục đích nghiên cứu. 
+<br />
+Giáo viên hướng dẫn: Ths. Phạm Thị Hường
